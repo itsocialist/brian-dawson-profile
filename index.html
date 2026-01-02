@@ -163,7 +163,8 @@
             width: 100%;
             margin: 0 auto;
             position: relative;
-            transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: opacity, transform;
+            transition: opacity 0.15s ease-out, transform 0.15s ease-out;
         }
 
         .hero-grid {
@@ -715,8 +716,8 @@
 
                     <div class="stat-inline">
                         <div class="stat-item">
-                            <div class="stat-value">30+</div>
-                            <div class="stat-label">Years</div>
+                            <div class="stat-value">15x</div>
+                            <div class="stat-label">ARR Growth</div>
                         </div>
                         <div class="stat-item">
                             <div class="stat-value">100+</div>
@@ -728,13 +729,22 @@
                 <div>
                     <p class="hero-statement">
                         Building <span class="accent">developer ecosystems</span>, driving technical adoption, and
-                        creating thought leadership across CloudBees, Linux Foundation, Ripple, and Sony. 30+ years at
+                        creating thought leadership across CloudBees, Linux Foundation, Ripple, and Sony. Decades at
                         the intersection of product, partnerships, and developer experience.
                     </p>
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="filter-container" style="margin: 30px auto 50px; padding: 0 20px;">
+        <a href="gallery.html?filter=all" class="filter-btn"><span>All Gallery</span></a>
+        <a href="gallery.html?filter=framework" class="filter-btn"><span>Frameworks</span></a>
+        <a href="gallery.html?filter=book" class="filter-btn"><span>Books</span></a>
+        <a href="gallery.html?filter=podcast" class="filter-btn"><span>Podcast</span></a>
+        <a href="gallery.html?filter=award" class="filter-btn"><span>Awards</span></a>
+        <a href="gallery.html?filter=talk" class="filter-btn"><span>Keynotes</span></a>
+    </div>
 
     <section id="experience">
         <div class="content-wrapper">
@@ -962,15 +972,6 @@
         </div>
     </section>
 
-    <div class="filter-container" style="margin: 60px auto; padding: 0 20px 40px;">
-        <a href="gallery.html?filter=all" class="filter-btn"><span>All Gallery</span></a>
-        <a href="gallery.html?filter=framework" class="filter-btn"><span>Frameworks</span></a>
-        <a href="gallery.html?filter=book" class="filter-btn"><span>Books</span></a>
-        <a href="gallery.html?filter=podcast" class="filter-btn"><span>Podcast</span></a>
-        <a href="gallery.html?filter=award" class="filter-btn"><span>Awards</span></a>
-        <a href="gallery.html?filter=talk" class="filter-btn"><span>Keynotes</span></a>
-    </div>
-
     <script>
         // Initialize Lucide icons
         lucide.createIcons();
@@ -983,8 +984,8 @@
         canvas.height = window.innerHeight;
 
         const particles = [];
-        const particleCount = 90;
-        const connectionDistance = 140;
+        const particleCount = 50;
+        const connectionDistance = 120;
         const cyan = 'rgba(6, 182, 212, 0.6)';
 
         class Particle {
@@ -1050,28 +1051,26 @@
             canvas.height = window.innerHeight;
         });
 
-        // Viewport-based fading
+        // Viewport-based fading (optimized)
         function updateViewportFades() {
             const sections = document.querySelectorAll('section');
-            const viewportCenter = window.innerHeight / 2;
+            const viewportHeight = window.innerHeight;
 
             sections.forEach(section => {
                 const content = section.querySelector('.content-wrapper');
                 if (!content) return;
 
                 const rect = section.getBoundingClientRect();
-                const elementCenter = rect.top + rect.height / 2;
-                const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
-                const maxDistance = window.innerHeight / 2;
+                const visibleTop = Math.max(0, rect.top);
+                const visibleBottom = Math.min(viewportHeight, rect.bottom);
+                const visibleHeight = Math.max(0, visibleBottom - visibleTop);
+                const visibility = visibleHeight / Math.min(rect.height, viewportHeight);
 
-                let opacity = 1 - (distanceFromCenter / maxDistance) * 0.8;
-                opacity = Math.max(0.2, Math.min(1, opacity));
+                const opacity = Math.max(0.3, Math.min(1, visibility * 1.5));
+                const translate = (1 - opacity) * 10;
 
-                const t = opacity;
-                const smoothOpacity = t * t * (3 - 2 * t);
-
-                content.style.opacity = smoothOpacity;
-                content.style.transform = `translateY(${(1 - smoothOpacity) * 20}px)`;
+                content.style.opacity = opacity;
+                content.style.transform = `translateY(${translate}px)`;
             });
         }
 
@@ -1084,7 +1083,7 @@
                 });
                 ticking = true;
             }
-        });
+        }, { passive: true });
 
         updateViewportFades();
 
