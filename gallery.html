@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery — Brian Dawson</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;600&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600&family=JetBrains+Mono:wght@300;400;600&display=swap"
+        rel="stylesheet">
     <script src="https://unpkg.com/lucide@latest"></script>
     <style>
         :root {
@@ -24,45 +27,54 @@
             --glass-bg: rgba(30, 41, 59, 0.4);
             --glass-border: rgba(148, 163, 184, 0.2);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
-        html { scroll-behavior: smooth; }
-        
+
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'Inter', -apple-system, sans-serif;
             background: var(--deep-black);
             color: var(--slate-400);
             overflow-x: hidden;
         }
-        
+
         #particles-canvas {
             position: fixed;
             inset: 0;
             z-index: 0;
             opacity: 0.4;
         }
-        
+
         .grid-bg {
             position: fixed;
             inset: 0;
-            background-image: 
+            background-image:
                 linear-gradient(var(--slate-800) 1px, transparent 1px),
                 linear-gradient(90deg, var(--slate-800) 1px, transparent 1px);
             background-size: 60px 60px;
             opacity: 0.15;
             animation: gridPulse 8s ease-in-out infinite;
         }
-        
+
         @keyframes gridPulse {
-            0%, 100% { opacity: 0.12; }
-            50% { opacity: 0.22; }
+
+            0%,
+            100% {
+                opacity: 0.12;
+            }
+
+            50% {
+                opacity: 0.22;
+            }
         }
-        
+
         .vignette {
             position: fixed;
             inset: 0;
@@ -70,7 +82,7 @@
             pointer-events: none;
             z-index: 1;
         }
-        
+
         header {
             position: relative;
             z-index: 100;
@@ -78,7 +90,7 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
         }
-        
+
         .header-content {
             max-width: 1400px;
             margin: 0 auto;
@@ -86,7 +98,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .back-link {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
@@ -105,13 +117,13 @@
             align-items: center;
             gap: 8px;
         }
-        
+
         .back-link:hover {
             border-color: var(--cyan);
             box-shadow: 0 0 36px rgba(6, 182, 212, 0.3);
             transform: translateX(-3px);
         }
-        
+
         h1 {
             font-size: clamp(44px, 7.5vw, 68px);
             font-weight: 200;
@@ -119,7 +131,7 @@
             color: var(--white);
             margin-bottom: 10px;
         }
-        
+
         .subtitle {
             font-family: 'JetBrains Mono', monospace;
             font-size: 11px;
@@ -127,7 +139,7 @@
             color: var(--slate-700);
             text-transform: uppercase;
         }
-        
+
         .filter-section {
             position: sticky;
             top: 0;
@@ -137,7 +149,7 @@
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--glass-border);
         }
-        
+
         .filter-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -146,7 +158,7 @@
             justify-content: center;
             flex-wrap: wrap;
         }
-        
+
         .filter-btn {
             padding: 11px 24px;
             background: var(--glass-bg);
@@ -164,7 +176,7 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .filter-btn::before {
             content: '';
             position: absolute;
@@ -173,29 +185,29 @@
             opacity: 0;
             transition: opacity 0.4s ease;
         }
-        
+
         .filter-btn:hover {
             border-color: var(--cyan);
             color: var(--cyan);
             transform: translateY(-2px);
             box-shadow: 0 6px 20px rgba(6, 182, 212, 0.3);
         }
-        
+
         .filter-btn.active {
             border-color: var(--cyan);
             color: var(--deep-black);
             box-shadow: 0 0 36px rgba(6, 182, 212, 0.4);
         }
-        
+
         .filter-btn.active::before {
             opacity: 1;
         }
-        
+
         .filter-btn span {
             position: relative;
             z-index: 1;
         }
-        
+
         .gallery-container {
             position: relative;
             z-index: 10;
@@ -204,7 +216,7 @@
             padding: 50px 60px;
             transition: opacity 0.5s ease-out, transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        
+
         .stats-holo {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -212,7 +224,7 @@
             margin-bottom: 60px;
             perspective: 1500px;
         }
-        
+
         .stat-card {
             background: var(--glass-bg);
             backdrop-filter: blur(20px) saturate(180%);
@@ -225,7 +237,7 @@
             transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             transform-style: preserve-3d;
         }
-        
+
         .stat-card::after {
             content: '';
             position: absolute;
@@ -236,18 +248,23 @@
             background: linear-gradient(45deg, transparent 30%, rgba(6, 182, 212, 0.15) 50%, transparent 70%);
             animation: holoScan 8s linear infinite;
         }
-        
+
         @keyframes holoScan {
-            from { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
-            to { transform: translateX(100%) translateY(100%) rotate(45deg); }
+            from {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+
+            to {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
         }
-        
+
         .stat-card:hover {
             transform: translateZ(26px) rotateY(4deg);
             border-color: rgba(6, 182, 212, 0.6);
             box-shadow: 0 18px 54px rgba(0, 0, 0, 0.6), 0 0 70px rgba(6, 182, 212, 0.3);
         }
-        
+
         .stat-number {
             font-family: 'JetBrains Mono', monospace;
             font-size: 44px;
@@ -260,12 +277,20 @@
             z-index: 1;
             animation: counterPulse 4s ease-in-out infinite;
         }
-        
+
         @keyframes counterPulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; text-shadow: 0 0 36px rgba(6, 182, 212, 0.8); }
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+                text-shadow: 0 0 36px rgba(6, 182, 212, 0.8);
+            }
         }
-        
+
         .stat-label {
             font-size: 11px;
             font-weight: 600;
@@ -275,14 +300,14 @@
             position: relative;
             z-index: 1;
         }
-        
+
         .gallery-masonry {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 24px;
             perspective: 1500px;
         }
-        
+
         .gallery-item {
             background: var(--glass-bg);
             backdrop-filter: blur(20px) saturate(180%);
@@ -293,7 +318,7 @@
             transform-style: preserve-3d;
             opacity: 1;
         }
-        
+
         .gallery-item.hidden {
             opacity: 0;
             transform: scale(0.8) translateZ(-100px);
@@ -301,13 +326,13 @@
             position: absolute;
             visibility: hidden;
         }
-        
+
         .gallery-item:hover {
             transform: translateZ(36px) translateY(-10px) rotateX(4deg);
             border-color: rgba(6, 182, 212, 0.6);
             box-shadow: 0 22px 64px rgba(0, 0, 0, 0.7), 0 0 70px rgba(6, 182, 212, 0.3);
         }
-        
+
         .item-visual {
             width: 100%;
             height: 200px;
@@ -317,7 +342,7 @@
             align-items: center;
             justify-content: center;
         }
-        
+
         .item-visual i {
             width: 64px;
             height: 64px;
@@ -326,27 +351,50 @@
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
             transition: all 0.6s ease;
         }
-        
+
         .gallery-item:hover .item-visual i {
             transform: scale(1.15) rotate(5deg);
             opacity: 1;
         }
-        
+
         .item-gradient {
             position: absolute;
             inset: 0;
             opacity: 0.85;
         }
-        
-        .gradient-1 { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
-        .gradient-2 { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
-        .gradient-3 { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
-        .gradient-4 { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
-        .gradient-5 { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
-        .gradient-6 { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
-        .gradient-7 { background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%); }
-        .gradient-8 { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); }
-        
+
+        .gradient-1 {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .gradient-2 {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .gradient-3 {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        .gradient-4 {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+
+        .gradient-5 {
+            background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+        }
+
+        .gradient-6 {
+            background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+        }
+
+        .gradient-7 {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+        }
+
+        .gradient-8 {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+        }
+
         .item-category {
             position: absolute;
             top: 14px;
@@ -363,17 +411,31 @@
             text-transform: uppercase;
             z-index: 10;
         }
-        
-        .item-category.framework { background: rgba(16, 185, 129, 0.9); }
-        .item-category.book { background: rgba(139, 92, 246, 0.9); }
-        .item-category.podcast { background: rgba(245, 158, 11, 0.9); }
-        .item-category.award { background: rgba(239, 68, 68, 0.9); }
-        .item-category.talk { background: rgba(6, 182, 212, 0.9); }
-        
+
+        .item-category.framework {
+            background: rgba(16, 185, 129, 0.9);
+        }
+
+        .item-category.book {
+            background: rgba(139, 92, 246, 0.9);
+        }
+
+        .item-category.podcast {
+            background: rgba(245, 158, 11, 0.9);
+        }
+
+        .item-category.award {
+            background: rgba(239, 68, 68, 0.9);
+        }
+
+        .item-category.talk {
+            background: rgba(6, 182, 212, 0.9);
+        }
+
         .item-content {
             padding: 24px 20px;
         }
-        
+
         .item-meta {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
@@ -383,7 +445,7 @@
             text-transform: uppercase;
             margin-bottom: 10px;
         }
-        
+
         .item-title {
             font-size: 17px;
             font-weight: 500;
@@ -391,14 +453,14 @@
             line-height: 1.4;
             margin-bottom: 10px;
         }
-        
+
         .item-description {
             font-size: 12px;
             font-weight: 300;
             color: var(--slate-400);
             line-height: 1.8;
         }
-        
+
         footer {
             margin-top: 60px;
             padding: 32px 60px;
@@ -407,42 +469,47 @@
             position: relative;
             z-index: 10;
         }
-        
+
         footer p {
             font-family: 'JetBrains Mono', monospace;
             font-size: 10px;
             color: var(--slate-700);
             letter-spacing: 0.3em;
         }
-        
+
         @media (max-width: 1024px) {
             .gallery-masonry {
                 grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             }
         }
-        
+
         @media (max-width: 768px) {
-            header, .filter-section, .gallery-container, footer {
+
+            header,
+            .filter-section,
+            .gallery-container,
+            footer {
                 padding-left: 20px;
                 padding-right: 20px;
             }
-            
+
             .header-content {
                 flex-direction: column;
                 gap: 20px;
             }
-            
+
             .gallery-masonry {
                 grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
+
 <body>
     <canvas id="particles-canvas"></canvas>
     <div class="grid-bg"></div>
     <div class="vignette"></div>
-    
+
     <header>
         <div class="header-content">
             <a href="index.html" class="back-link">
@@ -456,7 +523,7 @@
             <div style="width: 100px;"></div>
         </div>
     </header>
-    
+
     <div class="filter-section">
         <div class="filter-container">
             <button class="filter-btn active" data-filter="all"><span>All</span></button>
@@ -467,7 +534,7 @@
             <button class="filter-btn" data-filter="talk"><span>Keynotes</span></button>
         </div>
     </div>
-    
+
     <div class="gallery-container">
         <div class="stats-holo">
             <div class="stat-card">
@@ -487,7 +554,7 @@
                 <div class="stat-label">Awards</div>
             </div>
         </div>
-        
+
         <div class="gallery-masonry">
             <div class="gallery-item" data-category="framework">
                 <div class="item-visual">
@@ -499,11 +566,12 @@
                     <div class="item-meta">DevOps Framework</div>
                     <h3 class="item-title">4 Quadrants of DevOps Maturity Model</h3>
                     <p class="item-description">
-                        Widely adopted enterprise DevOps transformation framework, academically cited and keynoted at Quality Jam 2018.
+                        Widely adopted enterprise DevOps transformation framework, academically cited and keynoted at
+                        Quality Jam 2018.
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="framework">
                 <div class="item-visual">
                     <div class="item-gradient gradient-2"></div>
@@ -514,11 +582,12 @@
                     <div class="item-meta">Core DevOps Model</div>
                     <h3 class="item-title">The DevOps Trinity</h3>
                     <p class="item-description">
-                        Core DevOps implementation framework (People & Culture, Process & Practices, Tools & Technology), cited in O'Reilly publications.
+                        Core DevOps implementation framework (People & Culture, Process & Practices, Tools &
+                        Technology), cited in O'Reilly publications.
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="book">
                 <div class="item-visual">
                     <div class="item-gradient gradient-3"></div>
@@ -533,7 +602,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="book">
                 <div class="item-visual">
                     <div class="item-gradient gradient-4"></div>
@@ -548,7 +617,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="podcast">
                 <div class="item-visual">
                     <div class="item-gradient gradient-5"></div>
@@ -559,11 +628,12 @@
                     <div class="item-meta">CloudBees · 2+ Years</div>
                     <h3 class="item-title">DevOps Radio</h3>
                     <p class="item-description">
-                        Host of top-ranked podcast for over 2 years, 30+ episodes covering DevOps transformation, CI/CD, and enterprise practices.
+                        Host of top-ranked podcast for over 2 years, 30+ episodes covering DevOps transformation, CI/CD,
+                        and enterprise practices.
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="award">
                 <div class="item-visual">
                     <div class="item-gradient gradient-6"></div>
@@ -578,7 +648,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="award">
                 <div class="item-visual">
                     <div class="item-gradient gradient-7"></div>
@@ -593,7 +663,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="award">
                 <div class="item-visual">
                     <div class="item-gradient gradient-8"></div>
@@ -608,7 +678,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="award">
                 <div class="item-visual">
                     <div class="item-gradient gradient-1"></div>
@@ -619,11 +689,12 @@
                     <div class="item-meta">Sony International · 2004</div>
                     <h3 class="item-title">Global Excellence Award</h3>
                     <p class="item-description">
-                        Sony Computer Entertainment International Global Excellence Award for contributions to PlayStation platform.
+                        Sony Computer Entertainment International Global Excellence Award for contributions to
+                        PlayStation platform.
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="talk">
                 <div class="item-visual">
                     <div class="item-gradient gradient-2"></div>
@@ -634,11 +705,12 @@
                     <div class="item-meta">DevOps World · 2016-2020</div>
                     <h3 class="item-title">DevOps World / Jenkins World Keynotes</h3>
                     <p class="item-description">
-                        Delivered keynote presentations at DevOps World and Jenkins World conferences across multiple years.
+                        Delivered keynote presentations at DevOps World and Jenkins World conferences across multiple
+                        years.
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="talk">
                 <div class="item-visual">
                     <div class="item-gradient gradient-3"></div>
@@ -653,7 +725,7 @@
                     </p>
                 </div>
             </div>
-            
+
             <div class="gallery-item" data-category="talk">
                 <div class="item-visual">
                     <div class="item-gradient gradient-4"></div>
@@ -664,33 +736,34 @@
                     <div class="item-meta">CloudBees · 2015-2020</div>
                     <h3 class="item-title">100+ Public Webinars & Workshops</h3>
                     <p class="item-description">
-                        Evangelized DevOps through over 100 public webinars, presentations, and workshops across enterprise audiences.
+                        Evangelized DevOps through over 100 public webinars, presentations, and workshops across
+                        enterprise audiences.
                     </p>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <footer>
         <p>BRIAN DAWSON © 2025</p>
     </footer>
-    
+
     <script>
         // Initialize Lucide
         lucide.createIcons();
-        
+
         // Particle system
         const canvas = document.getElementById('particles-canvas');
         const ctx = canvas.getContext('2d');
-        
+
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        
+
         const particles = [];
         const particleCount = 80;
         const connectionDistance = 140;
         const cyan = 'rgba(6, 182, 212, 0.6)';
-        
+
         class Particle {
             constructor() {
                 this.x = Math.random() * canvas.width;
@@ -699,15 +772,15 @@
                 this.vy = (Math.random() - 0.5) * 0.5;
                 this.radius = Math.random() * 2 + 1;
             }
-            
+
             update() {
                 this.x += this.vx;
                 this.y += this.vy;
-                
+
                 if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
                 if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
-            
+
             draw() {
                 ctx.beginPath();
                 ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
@@ -715,18 +788,18 @@
                 ctx.fill();
             }
         }
-        
+
         for (let i = 0; i < particleCount; i++) {
             particles.push(new Particle());
         }
-        
+
         function drawConnections() {
             for (let i = 0; i < particles.length; i++) {
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
                     const distance = Math.sqrt(dx * dx + dy * dy);
-                    
+
                     if (distance < connectionDistance) {
                         const opacity = 1 - (distance / connectionDistance);
                         ctx.beginPath();
@@ -739,69 +812,37 @@
                 }
             }
         }
-        
+
         function animate() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => { p.update(); p.draw(); });
             drawConnections();
             requestAnimationFrame(animate);
         }
-        
+
         animate();
-        
+
         window.addEventListener('resize', () => {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
-        
-        // Viewport fading
-        function updateGalleryFade() {
-            const container = document.querySelector('.gallery-container');
-            if (!container) return;
-            
-            const rect = container.getBoundingClientRect();
-            const viewportCenter = window.innerHeight / 2;
-            const elementCenter = rect.top + rect.height / 2;
-            const distanceFromCenter = Math.abs(elementCenter - viewportCenter);
-            const maxDistance = window.innerHeight / 2;
-            
-            let opacity = 1 - (distanceFromCenter / maxDistance) * 0.7;
-            opacity = Math.max(0.3, Math.min(1, opacity));
-            
-            const t = opacity;
-            const smoothOpacity = t * t * (3 - 2 * t);
-            
-            container.style.opacity = smoothOpacity;
-            container.style.transform = `translateY(${(1 - smoothOpacity) * 15}px)`;
-        }
-        
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                requestAnimationFrame(() => {
-                    updateGalleryFade();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        });
-        
-        updateGalleryFade();
-        
+
+        // Viewport fading - REMOVED per user request
+
         // Filter functionality
         const filterButtons = document.querySelectorAll('.filter-btn');
         const galleryItems = document.querySelectorAll('.gallery-item');
-        
+
         filterButtons.forEach(button => {
             button.addEventListener('click', () => {
                 filterButtons.forEach(btn => btn.classList.remove('active'));
                 button.classList.add('active');
-                
+
                 const filter = button.getAttribute('data-filter');
-                
+
                 galleryItems.forEach(item => {
                     const category = item.getAttribute('data-category');
-                    
+
                     if (filter === 'all' || category === filter) {
                         item.classList.remove('hidden');
                     } else {
@@ -810,6 +851,16 @@
                 });
             });
         });
+        });
+
+        // Handle URL params for filtering
+        const urlParams = new URLSearchParams(window.location.search);
+        const filterParam = urlParams.get('filter');
+        if (filterParam) {
+            const btn = document.querySelector(`.filter-btn[data-filter="${filterParam}"]`);
+            if (btn) btn.click();
+        }
     </script>
 </body>
+
 </html>
